@@ -4,9 +4,12 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "./dialog";
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   title: string;
@@ -23,11 +26,20 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
 }) => {
+  const [isMounted, setIsMounted] = useState(false);
   const onChange = (open: boolean) => {
-    if (!isOpen) {
+    if (!open) {
       onClose();
     }
   };
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return false;
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onChange}>

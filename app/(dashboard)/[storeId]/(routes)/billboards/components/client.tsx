@@ -1,12 +1,19 @@
 "use client";
+import React from "react";
+import { useParams, useRouter } from "next/navigation";
+
 import Heading from "@/components/ui/Heading";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { PlusIcon } from "lucide-react";
-import { useParams, useRouter } from "next/navigation";
-import React from "react";
+import { Plus, PlusIcon } from "lucide-react";
+import { BillboardColumn, columns } from "./columns";
+import { DataTable } from "@/components/ui/data-table";
 
-const BillboardClient = () => {
+interface BillboardClientProps {
+  data: BillboardColumn[];
+}
+
+const BillboardClient: React.FC<BillboardClientProps> = ({ data }) => {
   const router = useRouter();
   const params = useParams();
 
@@ -14,17 +21,20 @@ const BillboardClient = () => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title="Billboards(0)"
-          description="Manage billboards of your store"
+          title={`Billboards (${data.length})`}
+          description="Manage billboards for your store"
         />
         <Button
           onClick={() => router.push(`/${params.storeId}/billboards/new`)}
         >
-          <PlusIcon className="mr-2 w-4 h-4" />
-          Add New
+          <Plus className="mr-2 h-4 w-4" /> Add New
         </Button>
       </div>
       <Separator />
+      <DataTable columns={columns} data={data} />
+      {/* <Heading title="API" description="API Calls for Billboards" />
+      <Separator />
+      <ApiList entityName="billboards" entityIdName="billboardId" /> */}
     </>
   );
 };

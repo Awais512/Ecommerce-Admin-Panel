@@ -53,7 +53,7 @@ export const CellAction: React.FC<CellActionProps> = ({ data }) => {
     <>
       <AlertModal
         isOpen={open}
-        onClose={() => setOpen(true)}
+        onClose={() => setOpen(false)}
         onConfirm={onDelete}
         loading={loading}
       />
